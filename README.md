@@ -49,7 +49,7 @@ python3 sandbox.py
 
 * **Archivos PDF:** pdfextract, pdfdecrypt,pdfresurrect.
 
-⚠️ **Aviso**
+### ⚠️ **Aviso**
 
 Este script ha sido desarrollado únicamente con fines **educativos y de investigación en ciberseguridad**.
 
