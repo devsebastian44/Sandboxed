@@ -13,14 +13,7 @@ Este repositorio te servirá para **analizar malware en un entorno seguro**, ya 
 
 - Sistema operativo: Linux (Ubuntu recomendado)
 - Python 3.8 o superior
-- Dependencias incluidas en `requirements.txt`
 - Permisos de administrador para ejecutar `setup.sh`
-
-Instala las librerías necesarias:
-
-```bash
-pip install -r requirements.txt
-```
 
 ---
 
@@ -78,7 +71,7 @@ python3 sandbox.py
 
 ## 📜 Licencia
 
-Este proyecto está bajo la licencia MIT.  
+Este proyecto está bajo la licencia GPL.  
 Puedes usarlo libremente con fines educativos y de investigación.
 
 ---
