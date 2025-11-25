@@ -43,14 +43,6 @@ Ejecuta el script principal:
 python3 sandbox.py
 ```
 
-<p align="center">
-  <img src="Img/setup.png" width="650px">
-</p>
-
-<p align="center">
-  <img src="Img/sandbox.png" width="650px">
-</p>
-
 ---
 
 ## 🛠️ Contenido de herramientas
