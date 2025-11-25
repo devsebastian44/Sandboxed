@@ -1,58 +1,90 @@
-# Sandboxed
+## Sandboxed
 
 <p align="center">
-<img src="Logotipo.png" width="360px" height="68px">
+  <img src="./Img/Logo.png" height="300px" width="350px">
 </p>
 
-Un sandbox es un entorno de pruebas aislado en el que se pueden ejecutar aplicaciones o programas sin afectar el sistema operativo subyacente. Se utiliza con frecuencia para probar software nuevo, realizar pruebas de seguridad y aislar aplicaciones que pueden ser sospechosas o potencialmente maliciosas.
+Un **sandbox** es un entorno de pruebas aislado en el que se pueden ejecutar aplicaciones o programas sin afectar el sistema operativo subyacente.  
+Este repositorio te servirá para **analizar malware en un entorno seguro**, ya que incluye herramientas útiles y fáciles de usar.
 
-Este repositorio te servirá para analizar malware en un entorno aislado ya que tiene herramientas útiles y facil de usar.
+---
 
+## ⚙️ Requisitos
+
+- Sistema operativo: Linux (Ubuntu recomendado)
+- Python 3.8 o superior
+- Dependencias incluidas en `requirements.txt`
+- Permisos de administrador para ejecutar `setup.sh`
+
+Instala las librerías necesarias:
+
+```bash
+pip install -r requirements.txt
 ```
+
+---
+
+## 🚀 Instalación
+
+Clona el repositorio y accede al directorio:
+
+```bash
 git clone https://github.com/bl4ck44/Sandboxed.git
-
 cd Sandboxed
+```
 
+Configura el entorno:
+
+```bash
 chmod +x setup.sh
-
 sudo bash setup.sh
+```
 
+---
+
+## ▶️ Uso
+
+Ejecuta el script principal:
+
+```bash
 python3 sandbox.py
 ```
 
 <p align="center">
-<img src="Img/setup.png" width="650px">
+  <img src="Img/setup.png" width="650px">
 </p>
 
 <p align="center">
-<img src="Img/sandbox.png" width="650px">
+  <img src="Img/sandbox.png" width="650px">
 </p>
 
-<br>
+---
 
-# Contenido de herramientas
+## 🛠️ Contenido de herramientas
 
-## Analizar ejecutables de Windows
-* **Propiedades estáticas:** manalyze, peframe.
+### Analizar ejecutables de Windows
+- **Propiedades estáticas:** manalyze, peframe  
+- **Strings y Deofuscación:** pestr, flarestrings, floss  
 
-* **Strings y Deofuscación:** pestr, flarestrings, floss.
+### Binarios Linux de ingeniería inversa
+- **Propiedades estáticas:** trid, exiftool  
+- **Desmontar/Descompilar:** cutter  
 
-## Binarios Linux de ingeniería inversa
+### Examinar documentos sospechosos
+- **Archivos de Microsoft Office:** pcodedmp, olevba, xlmdeobfuscator  
+- **Archivos PDF:** pdfextract, pdfdecrypt, pdfresurrect  
 
-* **Propiedades estáticas:** trid, exiftool.
+---
 
-* **Desmontar/Descompilar:** cutter.
+## 📜 Licencia
 
-## Examinar documentos sospechosos
+Este proyecto está bajo la licencia MIT.  
+Puedes usarlo libremente con fines educativos y de investigación.
 
-* **Archivos de Microsoft Office:** pcodedmp, olevba, xlmdeobfuscator.
+---
 
-* **Archivos PDF:** pdfextract, pdfdecrypt,pdfresurrect.
+## ⚠️ Aviso
 
-### ⚠️ **Aviso**
-
-Este script ha sido desarrollado únicamente con fines **educativos y de investigación en ciberseguridad**.
-
-No me responsabilizo del mal uso que se pueda dar ni de los daños que puedan ocasionarse por su ejecución.
-
-El uso indebido de este material puede ser **ilegal**.
+Este script ha sido desarrollado únicamente con fines **educativos y de investigación en ciberseguridad**.  
+El uso indebido de este material puede ser **ilegal**.  
+No me responsabilizo del mal uso ni de los daños que puedan ocasionarse por su ejecución.
