@@ -1,11 +1,15 @@
 import os
 import subprocess
 import sys
+import shlex
 
 
 def limpiar_pantalla():
     """Limpia la pantalla de forma multiplataforma"""
-    os.system("clear" if os.name != "nt" else "cls")
+    if os.name == "nt":
+        subprocess.run(["cls"], shell=True, check=False)  # nosec B602
+    else:
+        subprocess.run(["clear"], check=False)
 
 
 def crear_estructura_directorios():
@@ -49,8 +53,12 @@ def ejecutar_comando(comando, nombre_archivo, directorio="results"):
 
         print(f"\n[*] Ejecutando: {comando}")
         print("[*] Esto puede tardar un momento...")
+
+        # Shlex.split for safe command argument separation
+        # shell=False (default) prevents shell injection
+        args = shlex.split(comando)
         resultado = subprocess.run(
-            comando, shell=True, capture_output=True, text=True, timeout=300
+            args, capture_output=True, text=True, timeout=300, check=False
         )
 
         salida = resultado.stdout + resultado.stderr
@@ -205,7 +213,11 @@ def menu_analisis_linux(archivo):
 
             if sub_opcion == "1":
                 print(f"[*] Abriendo Cutter con el archivo: {archivo}")
-                os.system(f"cutter {archivo}")
+                try:
+                    subprocess.run(["cutter", archivo], check=False)
+                except FileNotFoundError:
+                    print("[!] Error: Cutter no está instalado.")
+                    pausar()
             elif sub_opcion == "99":
                 continue
             else:
