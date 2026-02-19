@@ -59,6 +59,7 @@ def ejecutar_comando(comando, nombre_archivo, directorio="results"):
         # Shlex.split for safe command argument separation
         # shell=False (default) prevents shell injection
         # args are properly parsed by shlex to prevent injection
+        args = shlex.split(comando)
         resultado = subprocess.run(
             args, capture_output=True, text=True, timeout=300, check=False
         )  # nosec B603
