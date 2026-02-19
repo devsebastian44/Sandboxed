@@ -115,7 +115,7 @@ instalar_manalyze() {
         cd Manalyze || return 1
         
         echo -e "${YELLOW}[*] Compilando Manalyze...${NC}"
-        if cmake . && make -j$(nproc); then
+        if cmake . && make -j"$(nproc)"; then
             echo -e "${YELLOW}[*] Instalando Manalyze...${NC}"
             make install
             cd "$HOME" || exit
@@ -317,7 +317,7 @@ Instalar_Selectivo() {
     echo "[3] Herramientas Documentos (pcodedmp, olevba, xlmdeobfuscator, pdfextract, pdfresurrect)"
     echo "[4] Todo"
     echo
-    read -p "$(echo -e ${BOLD}[+] Seleccione categoría: ${NC})" categoria
+    read -r -p "$(echo -e "${BOLD}[+] Seleccione categoría: ${NC}")" categoria
     
     case $categoria in
         1)
@@ -357,20 +357,20 @@ while true; do
     echo -e "${BOLD}[4]${NC} Salir"
     echo
     
-    read -p "$(echo -e ${BOLD}[+] Seleccione una opción: ${NC})" opcion
+    read -r -p "$(echo -e "${BOLD}[+] Seleccione una opción: ${NC}")" opcion
     
     case $opcion in
         1)
             Comprobar
-            read -p "$(echo -e \\n${BOLD}Presione Enter para continuar...${NC})"
+            read -r -p "$(echo -e "\n${BOLD}Presione Enter para continuar...${NC}")"
             ;;
         2)
             Instalar_Todo
-            read -p "$(echo -e \\n${BOLD}Presione Enter para continuar...${NC})"
+            read -r -p "$(echo -e "\n${BOLD}Presione Enter para continuar...${NC}")"
             ;;
         3)
             Instalar_Selectivo
-            read -p "$(echo -e \\n${BOLD}Presione Enter para continuar...${NC})"
+            read -r -p "$(echo -e "\n${BOLD}Presione Enter para continuar...${NC}")"
             ;;
         4)
             clear
