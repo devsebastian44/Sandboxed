@@ -21,6 +21,14 @@ Esta herramienta es estrictamente para **investigación educativa y defensiva**.
 - **Advertencia de Uso**: La ejecución de payloads o el análisis de malware SOLAMENTE debe realizarse en máquinas virtuales aisladas.
 - **Responsabilidad**: El usuario es el único responsable del cumplimiento legal y la seguridad.
 
+## 🚀 Instalación y Acceso
+
+> [!IMPORTANT]
+> El repositorio completo con todo el código funcional está disponible en **GitLab** para acceso completo.
+
+https://gitlab.com/group-cybersecurity-lab/sandboxed.git
+
+
 ---
 
 ## 🏗️ Estructura del Repositorio
