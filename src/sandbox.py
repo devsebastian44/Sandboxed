@@ -20,12 +20,18 @@ def crear_estructura_directorios():
 def mostrar_banner():
     """Muestra el banner de la aplicación"""
     print("")
-    b1 = r"  _________                  .______.                           .___"
-    b2 = r" /   _____/____    ____    __| _/\_ |__   _______  ___ ____   __| _/"
-    b3 = r" \_____  \\__  \  /    \  / __ |  | __ \ /  _ \  \/  // __ \ / __ | "
-    b4 = r" /        \/ __ \|   |  \/ /_/ |  | \_\ (  <_> >    <\  ___// /_/ | "
-    b5 = r"/_______  (____  /___|  /\____ |  |___  /\____/__/\_ \\___  >____ | "
-    b6 = r"        \/     \/     \/      \/      \/            \/    \/     \/ "
+    b1 = r"  _________                  .______.                           "
+    b1 += r".___"
+    b2 = r" /   _____/____    ____    __| _/\_ |__   _______  ___ ____   "
+    b2 += r"__| _/"
+    b3 = r" \_____  \\__  \  /    \  / __ |  | __ \ /  _ \  \/  // __ \ "
+    b3 += r"/ __ | "
+    b4 = r" /        \/ __ \|   |  \/ /_/ |  | \_\ (  <_> >    <\  ___// "
+    b4 += r"/_/ | "
+    b5 = r"/_______  (____  /___|  /\____ |  |___  /\____/__/\_ \\___  "
+    b5 += r">____ | "
+    b6 = r"        \/     \/     \/      \/      \/            \/    \/     "
+    b6 += r"\/ "
     print("\033[91m" + b1 + "\033[0m")
     print("\033[91m" + b2 + "\033[0m")
     print("\033[91m" + b3 + "\033[0m")
@@ -109,13 +115,14 @@ def menu_analisis_windows(archivo):
         print("[2] Cadenas y desofuscación")
         print("[99] Volver al menú principal")
 
-        opcion = input("\033[1m\n[+] Ingrese una opción: \033[0m").strip()
+        msg = "\033[1m\n[+] Ingrese una opción: \033[0m"
+        opcion = input(msg).strip()
 
         if opcion == "1":
             print("\n[1] Analizar con manalyze")
             print("[2] Analizar con peframe")
             print("[99] Volver")
-            sub_opcion = input("\033[1m\n[+] Ingrese una opción: \033[0m").strip()
+            sub_opcion = input(msg).strip()
 
             if sub_opcion == "1":
                 ejecutar_comando(f"manalyze {archivo}", "manalyze.txt")
@@ -134,7 +141,7 @@ def menu_analisis_windows(archivo):
             print("[2] Analizar con flarestrings")
             print("[3] Analizar con floss")
             print("[99] Volver")
-            sub_opcion = input("\033[1m\n[+] Ingrese una opción: \033[0m").strip()
+            sub_opcion = input(msg).strip()
 
             if sub_opcion == "1":
                 ejecutar_comando(f"pestr {archivo}", "pestr.txt")
@@ -170,13 +177,14 @@ def menu_analisis_linux(archivo):
         print("[2] Desmontar o Descompilar")
         print("[99] Volver al menú principal")
 
-        opcion = input("\033[1m\n[+] Ingrese una opción: \033[0m").strip()
+        msg = "\033[1m\n[+] Ingrese una opción: \033[0m"
+        opcion = input(msg).strip()
 
         if opcion == "1":
             print("\n[1] Analizar con trid")
             print("[2] Analizar con exiftool")
             print("[99] Volver")
-            sub_opcion = input("\033[1m\n[+] Ingrese una opción: \033[0m").strip()
+            sub_opcion = input(msg).strip()
 
             if sub_opcion == "1":
                 ejecutar_comando(f"trid {archivo}", "trid.txt")
@@ -193,7 +201,7 @@ def menu_analisis_linux(archivo):
         elif opcion == "2":
             print("\n[1] Analizar con cutter")
             print("[99] Volver")
-            sub_opcion = input("\033[1m\n[+] Ingrese una opción: \033[0m").strip()
+            sub_opcion = input(msg).strip()
 
             if sub_opcion == "1":
                 print(f"[*] Abriendo Cutter con el archivo: {archivo}")
@@ -224,14 +232,15 @@ def menu_documentos(archivo):
         print("[3] Usar otro archivo")
         print("[99] Volver al menú principal")
 
-        opcion = input("\033[1m\n[+] Ingrese una opción: \033[0m").strip()
+        msg = "\033[1m\n[+] Ingrese una opción: \033[0m"
+        opcion = input(msg).strip()
 
         if opcion == "1":
             print("\n[1] Analizar con pcodedmp")
             print("[2] Analizar con olevba")
             print("[3] Analizar con XLMMacroDeobfuscator (Excel)")
             print("[99] Volver")
-            sub_opcion = input("\033[1m\n[+] Ingrese una opción: \033[0m").strip()
+            sub_opcion = input(msg).strip()
 
             if sub_opcion == "1":
                 ejecutar_comando(f"pcodedmp {archivo}", "pcodedmp.txt")
@@ -253,15 +262,15 @@ def menu_documentos(archivo):
 
         elif opcion == "2":
             def_path = "results/PDF"
-            msg = f"[+] Directorio de salida (Enter para '{def_path}'): "
-            destino = input("\033[1m\n" + msg + "\033[0m").strip()
+            prompt = f"[+] Directorio de salida (Enter para '{def_path}'): "
+            destino = input("\033[1m\n" + prompt + "\033[0m").strip()
             if not destino:
                 destino = def_path
 
             print("\n[1] Analizar con pdfextract")
             print("[2] Analizar con pdfresurrect")
             print("[99] Volver")
-            sub_opcion = input("\033[1m\n[+] Ingrese una opción: \033[0m").strip()
+            sub_opcion = input(msg).strip()
 
             if sub_opcion == "1":
                 cmd = f"pdfextract -afjms {archivo} -d {destino}"
@@ -277,8 +286,8 @@ def menu_documentos(archivo):
                 pausar()
 
         elif opcion == "3":
-            msg = "[+] Ingresa la ubicación del nuevo archivo: "
-            nuevo_archivo = input("\033[1m\n" + msg + "\033[0m").strip()
+            prompt = "[+] Ingresa la ubicación del nuevo archivo: "
+            nuevo_archivo = input("\033[1m\n" + prompt + "\033[0m").strip()
             if validar_archivo(nuevo_archivo):
                 archivo = nuevo_archivo
                 print(f"[✓] Usando temporalmente: {archivo}")
@@ -310,7 +319,8 @@ def menu_principal(archivo_global):
         print("[4] Cambiar archivo principal")
         print("[5] Salir")
 
-        opcion = input("\033[1m\n[+] Ingrese una opción: \033[0m").strip()
+        msg = "\033[1m\n[+] Ingrese una opción: \033[0m"
+        opcion = input(msg).strip()
 
         if opcion == "":
             print("[!] Por favor ingrese una opción")
@@ -325,8 +335,8 @@ def menu_principal(archivo_global):
             if validar_archivo(archivo_global):
                 menu_documentos(archivo_global)
         elif opcion == "4":
-            msg = "[+] Nueva ubicación del archivo: "
-            nuevo_archivo = input("\033[1m\n" + msg + "\033[0m").strip()
+            prompt = "[+] Nueva ubicación del archivo: "
+            nuevo_archivo = input("\033[1m\n" + prompt + "\033[0m").strip()
             if validar_archivo(nuevo_archivo):
                 archivo_global = nuevo_archivo
                 print(f"[✓] Archivo actualizado: {archivo_global}")
@@ -353,8 +363,8 @@ def main():
     print("=" * 60)
     print("")
 
-    msg = "[+] Ingresa la ubicación del archivo para analizar: "
-    archivo = input("\033[1m" + msg + "\033[0m").strip()
+    prompt = "[+] Ingresa la ubicación del archivo para analizar: "
+    archivo = input("\033[1m" + prompt + "\033[0m").strip()
 
     if not archivo:
         print("\n[!] Debe ingresar una ubicación de archivo")
