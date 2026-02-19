@@ -8,7 +8,8 @@ def limpiar_pantalla():
 
 def crear_estructura_directorios():
     """Crea la estructura de directorios necesaria"""
-    directorios = ["Resultados", "Resultados/PDF"]
+    # Use relative path for results to stay within project root
+    directorios = ["results", "results/PDF"]
     for directorio in directorios:
         if not os.path.exists(directorio):
             os.makedirs(directorio)
