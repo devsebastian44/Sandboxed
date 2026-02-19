@@ -218,7 +218,9 @@ def menu_analisis_linux(archivo):
                 print(f"[*] Abriendo Cutter con el archivo: {archivo}")
                 try:
                     # Application specific orchestration
-                    subprocess.run(["cutter", archivo], check=False)  # nosec B603, B607
+                    subprocess.run(
+                        ["cutter", archivo], check=False
+                    )  # nosec B603, B607
                 except FileNotFoundError:
                     print("[!] Error: Cutter no está instalado.")
                     pausar()
