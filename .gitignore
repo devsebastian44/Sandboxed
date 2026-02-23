@@ -1,0 +1,26 @@
+# Results and Analysis Logs
+Results/
+results/
+*.txt
+*.pdf
+*.bin
+
+# Python artifacts
+__pycache__/
+*.py[cod]
+*$py.class
+.venv/
+env/
+venv/
+ENV/
+
+# Sensitive or Lab-only files
+tests/
+scripts/payloads/
+.env
+configs/*.yaml
+!configs/*.example.yaml
+
+# OS generated files
+.DS_Store
+Thumbs.db
