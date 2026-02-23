@@ -62,8 +62,7 @@ python3 sandbox.py
 
 ## 📜 Licencia
 
-Este proyecto está bajo la licencia GPL.  
-Puedes usarlo libremente con fines educativos y de investigación.
+Este proyecto está bajo la licencia GPL. Puedes usarlo libremente con fines educativos y de investigación.
 
 ---
 
