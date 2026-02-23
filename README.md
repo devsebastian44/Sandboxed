@@ -1,26 +1,3 @@
-<<<<<<< HEAD
-## Sandboxed
-
-<p align="center">
-  <img src="./Img/Logo.png" height="300px" width="350px">
-</p>
-
-Un **sandbox** es un entorno de pruebas aislado en el que se pueden ejecutar aplicaciones o programas sin afectar el sistema operativo subyacente. Este repositorio te servirá para **analizar malware en un entorno seguro**, ya que incluye herramientas útiles y fáciles de usar.
-
----
-
-## ⚙️ Requisitos
-
-- Sistema operativo: Linux (Ubuntu recomendado)
-- Python 3.8 o superior
-- Permisos de administrador para ejecutar `setup.sh`
-
----
-
-## 🚀 Instalación
-
-Clona el repositorio y accede al directorio:
-=======
 # Sandboxed: Entorno Profesional de Análisis de Malware
 
 ![Python](https://img.shields.io/badge/Python-3.9+-blue?logo=python&logoColor=white)
@@ -44,6 +21,14 @@ Esta herramienta es estrictamente para **investigación educativa y defensiva**.
 - **Advertencia de Uso**: La ejecución de payloads o el análisis de malware SOLAMENTE debe realizarse en máquinas virtuales aisladas.
 - **Responsabilidad**: El usuario es el único responsable del cumplimiento legal y la seguridad.
 
+## 🚀 Instalación y Acceso
+
+> [!IMPORTANT]
+> El repositorio completo con todo el código funcional está disponible en **GitLab** para acceso completo.
+
+https://gitlab.com/group-cybersecurity-lab/sandboxed.git
+
+
 ---
 
 ## 🏗️ Estructura del Repositorio
@@ -66,20 +51,10 @@ Esta herramienta es estrictamente para **investigación educativa y defensiva**.
 - Privilegios de root para la instalación de herramientas.
 
 ### 🛠️ Instalación
->>>>>>> 04cc696
 
 ```bash
 git clone https://github.com/bl4ck44/Sandboxed.git
 cd Sandboxed
-<<<<<<< HEAD
-```
-
-Configura el entorno:
-
-```bash
-chmod +x setup.sh
-sudo bash setup.sh
-=======
 sudo bash scripts/setup.sh
 ```
 
@@ -87,48 +62,10 @@ sudo bash scripts/setup.sh
 
 ```bash
 python3 src/sandbox.py
->>>>>>> 04cc696
 ```
 
 ---
 
-<<<<<<< HEAD
-## ▶️ Uso
-
-Ejecuta el script principal:
-
-```bash
-python3 sandbox.py
-```
-
----
-
-## 🛠️ Contenido de herramientas
-
-### Analizar ejecutables de Windows
-- **Propiedades estáticas:** manalyze, peframe  
-- **Strings y Deofuscación:** pestr, flarestrings, floss  
-
-### Binarios Linux de ingeniería inversa
-- **Propiedades estáticas:** trid, exiftool  
-- **Desmontar/Descompilar:** cutter  
-
-### Examinar documentos sospechosos
-- **Archivos de Microsoft Office:** pcodedmp, olevba, xlmdeobfuscator  
-- **Archivos PDF:** pdfextract, pdfdecrypt, pdfresurrect  
-
----
-
-## 📜 Licencia
-
-Este proyecto está bajo la licencia GPL. Puedes usarlo libremente con fines educativos y de investigación.
-
----
-
-## ⚠️ Aviso
-
-Este script ha sido desarrollado únicamente con fines **educativos y de investigación en ciberseguridad**. El uso indebido de este material puede ser **ilegal**. No me responsabilizo del mal uso ni de los daños que puedan ocasionarse por su ejecución.
-=======
 ## 🔄 Integración DevSecOps
 
 ### GitHub (Portafolio Público)
@@ -151,4 +88,3 @@ El laboratorio privado incluye:
 | **Windows** | `manalyze`, `peframe`, `pestr`, `flarestrings`, `floss` |
 | **Linux** | `trid`, `exiftool`, `cutter` |
 | **Docs/PDF** | `pcodedmp`, `olevba`, `xlmdeobfuscator`, `pdfextract`, `pdfresurrect` |
->>>>>>> 04cc696
