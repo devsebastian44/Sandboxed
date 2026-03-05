@@ -68,16 +68,33 @@ python3 src/sandbox.py
 
 ## 🔄 Integración DevSecOps
 
-### GitHub (Portafolio Público)
+### Flujo GitLab ➔ GitHub
 
-La versión pública se centra en la arquitectura y las mejores prácticas. Excluye pruebas funcionales o configuraciones sensibles para mantener un perfil limpio y profesional.
+El proyecto implementa una estrategia de **Seguridad por Diseño** que separa el laboratorio funcional del portafolio arquitectónico:
 
-### GitLab (Laboratorio Privado)
+### GitLab (Laboratorio Público Completo)
 
-El laboratorio privado incluye:
-- **Pipelines de CI/CD**: Linting automático y análisis de seguridad.
-- **Suite de Pruebas Completa**: Pruebas funcionales y de integración.
-- **Herramientas Avanzadas**: Payloads y configuraciones especializadas.
+El repositorio de GitLab funciona como **laboratorio público** que contiene:
+- **Código Fuente Completo**: Toda la lógica funcional de análisis de malware
+- **Pipelines CI/CD**: Integración continua con linting (*flake8*, *shellcheck*), análisis SAST (*bandit*) y pruebas automatizadas (*pytest*)
+- **Suite de Pruebas Integral**: Tests unitarios, funcionales y de integración
+- **Herramientas Especializadas**: Configuraciones avanzadas y payloads de análisis
+- **Documentación Técnica**: Manuales de operación y arquitectura detallada
+
+### GitHub (Portafolio Arquitectónico)
+
+La versión pública en GitHub sirve como **portafolio profesional** que demuestra:
+- **Arquitectura del Sistema**: Estructura y diseño del entorno sandboxed
+- **Mejores Prácticas DevSecOps**: Estrategias de seguridad y automatización
+- **Documentación de Referencia**: Guías técnicas y flujos de trabajo
+- **Perfil Profesional**: Presentación limpia sin funcionalidades críticas
+
+### Script de Sincronización
+
+El script `scripts/sync_to_github.sh` gestiona la publicación sanitizada:
+1. **Validación Automática**: Ejecuta pipelines completos en GitLab
+2. **Sanitización Controlada**: Remueve código sensible y configuraciones internas
+3. **Sincronización Segura**: Publica solo arquitectura y documentación en GitHub
 
 ---
 
