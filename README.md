@@ -1,107 +1,321 @@
-# Sandboxed: Entorno Profesional de Análisis de Malware
+# 🔬 Sandboxed
 
-![Python](https://img.shields.io/badge/Python-3.9+-blue?logo=python&logoColor=white)
-![GitLab](https://img.shields.io/badge/GitLab-Repository-orange?logo=gitlab)
-![License](https://img.shields.io/badge/License-GPL--3.0-red)
-![Status](https://img.shields.io/badge/Status-Stable-brightgreen)
-![Malware Analysis](https://img.shields.io/badge/Type-An%C3%A1lisis%20de%20Malware-darkred)
-![Security](https://img.shields.io/badge/Security-Investigaci%C3%B3n-critical)
-
-**Sandboxed** es una herramienta de orquestación de análisis estático orientada a DevSecOps. Proporciona un entorno estructurado, aislado y ético para que investigadores y profesionales de seguridad examinen archivos sospechosos (ejecutables de Windows, binarios de Linux y documentos) utilizando herramientas estándar de la industria.
+![Python](https://img.shields.io/badge/Python-3.8+-3776AB?style=flat&logo=python&logoColor=white)
+![REMnux](https://img.shields.io/badge/REMnux-Compatible-4EAA25?style=flat&logo=linux&logoColor=white)
+![GitLab CI](https://img.shields.io/badge/GitLab_CI-DevSecOps-FC6D26?style=flat&logo=gitlab&logoColor=white)
+![Bandit](https://img.shields.io/badge/SAST-Bandit-critical?style=flat&logo=python&logoColor=white)
+![License](https://img.shields.io/badge/License-GPL--3.0-red?style=flat&logo=gnu&logoColor=white)
+![Type](https://img.shields.io/badge/Type-Malware%20Analysis-darkred?style=flat&logo=virustotal&logoColor=white)
 
 ---
 
-## 🎯 Objetivo del Proyecto
+## 🧠 Overview
 
-Este repositorio está diseñado para demostrar un enfoque profesional en la investigación de malware. Se centra en la automatización, documentación técnica clara y la separación de un portafolio público (GitHub) de un laboratorio de investigación totalmente funcional (GitLab).
+**Sandboxed** es un orquestador de análisis estático de malware en Python, diseñado para ejecutarse sobre entornos Linux especializados como **REMnux**. A través de un menú interactivo centralizado (`sandbox.py`), la herramienta encadena y ejecuta un conjunto de utilidades de análisis forense clasificadas por tipo de artefacto: ejecutables Windows (PE), binarios Linux y documentos ofimáticos/PDF.
 
-## ⚖️ Propósito Ético y Educativo
+El sistema genera informes de análisis en múltiples formatos (`.txt`, `.pdf`) y los almacena en un directorio de resultados aislado (`Results/`), garantizando que ningún artefacto de análisis sea rastreado por Git. La arquitectura separa la lógica central de orquestación (`src/`), los scripts de instalación y payloads de prueba (`scripts/`), y las configuraciones personalizables por entorno (`configs/*.yaml`).
 
-Esta herramienta es estrictamente para **investigación educativa y defensiva**.
-- **Advertencia de Uso**: La ejecución de payloads o el análisis de malware SOLAMENTE debe realizarse en máquinas virtuales aisladas.
-- **Responsabilidad**: El usuario es el único responsable del cumplimiento legal y la seguridad.
+El proyecto sigue la misma estrategia **DevSecOps de doble repositorio** que el resto del laboratorio: el código operativo completo reside en GitLab, mientras que GitHub expone únicamente la arquitectura y documentación sanitizada.
 
-## 🚀 Instalación y Acceso
-
-> [!IMPORTANT]
-> El repositorio completo con todo el código funcional está disponible en **GitLab** para acceso completo.
-
-https://gitlab.com/group-cybersecurity-lab/sandboxed.git
-
+> ⚠️ **Uso Responsable:** Esta herramienta está diseñada exclusivamente para análisis forense en entornos aislados y controlados. El análisis de muestras reales de malware debe realizarse estrictamente en máquinas virtuales sin acceso a redes de producción.
 
 ---
 
-## 🏗️ Estructura del Repositorio
+## ⚙️ Features
 
-- **src/**: Lógica central de orquestación en Python.
-- **scripts/**: Scripts de instalación y configuración del entorno.
-- **docs/**: Documentación técnica detallada (`ARCHITECTURE.md`).
-- **diagrams/**: Flujo del sistema y arquitectura visual (`FLOW.md`).
-- **tests/**: Verificaciones automáticas y controles de seguridad.
-- **configs/**: Plantillas de configuración.
+- **Menú interactivo de orquestación** (`sandbox.py`) que permite seleccionar y encadenar herramientas de análisis según el tipo de artefacto a examinar
+- **Análisis de ejecutables Windows (PE)** mediante herramientas especializadas: `manalyze`, `peframe`, `pestr`, `flarestrings` y `floss` para extracción de strings ofuscadas y análisis estructural
+- **Análisis de binarios Linux** con `trid` (identificación de tipo de archivo), `exiftool` (metadatos) y `cutter` (desensamblado y análisis de control de flujo)
+- **Análisis de documentos y PDFs** a través de `pcodedmp`, `olevba`, `xlmdeobfuscator` (macros ofuscadas), `pdfextract` y `pdfresurrect`
+- **Salida de reportes en múltiples formatos**: `.txt` y `.pdf` generados automáticamente en el directorio `Results/` (excluido de Git)
+- **Sistema de configuración YAML por entorno**: `configs/*.yaml` con plantillas de ejemplo versionadas (`*.example.yaml`) y configuraciones locales gitignoreadas
+- **Script de instalación de dependencias** (`scripts/setup.sh`) que configura el entorno de herramientas con privilegios de root
+- **Subdirectorio de payloads de prueba** (`scripts/payloads/`) con muestras controladas para validación del pipeline de análisis (excluido de Git)
+- **Pipeline CI/CD GitLab** con linting (`flake8`, `shellcheck`), análisis SAST (`bandit`) y suite de pruebas (`pytest`)
+- **Script de sincronización sanitizada** (`scripts/sync_to_github.sh`) para publicación controlada hacia el repositorio público
 
 ---
 
-## 🚀 Empezando
+## 🛠️ Tech Stack
 
-### 📋 Prerrequisitos
+### Lenguaje y entorno
 
-- OS: Linux (Ubuntu/Debian recomendado)
-- Python 3.8+
-- Privilegios de root para la instalación de herramientas.
+| Componente | Tecnología | Propósito |
+|---|---|---|
+| Lenguaje principal | Python 3.8+ | Orquestación del menú y control del flujo de análisis |
+| Scripting | Bash (.sh) | Instalación de herramientas y sincronización entre repos |
+| Configuración | YAML | Parámetros de entorno, rutas de herramientas y ajustes por perfil |
+| Entorno base | REMnux (Linux) | Distribución Linux especializada en análisis de malware |
 
-### 🛠️ Instalación
+### Herramientas de análisis integradas
+
+| Categoría | Herramientas | Función |
+|---|---|---|
+| **PE / Windows** | `manalyze` | Análisis heurístico de ejecutables PE |
+| | `peframe` | Extracción de metadatos y secciones del binario |
+| | `pestr` | Extracción de strings imprimibles en PE |
+| | `flarestrings` | Extracción avanzada de strings (FLARE/Mandiant) |
+| | `floss` | Deofuscación y extracción de strings dinámicas |
+| **Linux / Binarios** | `trid` | Identificación del tipo de archivo por firma binaria |
+| | `exiftool` | Lectura de metadatos embebidos en el archivo |
+| | `cutter` | Desensamblado, análisis de CFG y análisis estático avanzado |
+| **Documentos / PDF** | `pcodedmp` | Dump de código p-code VBA en documentos Office |
+| | `olevba` | Extracción y análisis de macros VBA maliciosas |
+| | `xlmdeobfuscator` | Deofuscación de macros XLM (Excel 4.0) |
+| | `pdfextract` | Extracción de objetos embebidos en PDFs |
+| | `pdfresurrect` | Recuperación de revisiones ocultas en PDFs |
+
+### Pipeline de calidad y seguridad
+
+| Herramienta | Propósito |
+|---|---|
+| `flake8` | Linting y verificación de estilo Python (PEP 8) |
+| `shellcheck` | Análisis estático de scripts Bash |
+| `bandit` | SAST — detección de patrones peligrosos en código Python |
+| `pytest` | Suite de pruebas automatizadas unitarias y funcionales |
+
+---
+
+## 📦 Installation
+
+### Requisitos previos
+
+- **Sistema operativo:** Linux — REMnux (recomendado) o Ubuntu/Debian
+- **Python:** 3.8 o superior
+- **Privilegios:** root o sudo para instalación de herramientas del sistema
+
+> 💡 Se recomienda ejecutar sobre una distribución **REMnux** donde la mayoría de herramientas de análisis ya están preinstaladas.
+
+### Clonar el repositorio completo (desde GitLab)
 
 ```bash
-git clone https://github.com/bl4ck44/Sandboxed.git
+git clone https://gitlab.com/group-cybersecurity-lab/Sandboxed.git
 cd Sandboxed
+```
+
+### Configurar el entorno virtual Python
+
+```bash
+python3 -m venv .venv
+source .venv/bin/activate
+pip install -r requirements.txt
+```
+
+### Instalar herramientas de análisis del sistema
+
+```bash
+# Instalación automatizada con privilegios de root
 sudo bash scripts/setup.sh
 ```
 
-### 🔍 Uso
+Este script instala y configura las herramientas de análisis listadas en el Tech Stack, verificando su disponibilidad en el PATH del sistema.
+
+### Configurar el entorno local
+
+```bash
+# Copiar la plantilla de configuración y ajustar rutas locales
+cp configs/settings.example.yaml configs/settings.yaml
+nano configs/settings.yaml   # Editar rutas de herramientas si es necesario
+```
+
+### Instalar herramientas de análisis estático (CI local)
+
+```bash
+pip install flake8 bandit pytest
+apt install shellcheck
+```
+
+---
+
+## ▶️ Usage
+
+### Ejecutar el menú principal de análisis
 
 ```bash
 python3 src/sandbox.py
 ```
 
+Al iniciarse, `sandbox.py` presenta un menú interactivo que permite:
+
+1. Seleccionar el **tipo de artefacto** a analizar (PE Windows / binario Linux / documento-PDF)
+2. Especificar la **ruta del archivo** sospechoso
+3. Seleccionar las **herramientas** a ejecutar (una o varias encadenadas)
+4. Generar el **reporte de resultados** en `Results/` en formato `.txt` o `.pdf`
+
+```
+┌─────────────────────────────────────┐
+│         SANDBOXED — Main Menu       │
+│─────────────────────────────────────│
+│  [1] Analyze PE / Windows Binary    │
+│  [2] Analyze Linux Binary           │
+│  [3] Analyze Document / PDF         │
+│  [4] Settings & Configuration       │
+│  [0] Exit                           │
+└─────────────────────────────────────┘
+```
+
+### Ejemplo de flujo de análisis de un PE
+
+```bash
+# Iniciar el orquestador
+python3 src/sandbox.py
+
+# Seleccionar opción 1 (PE / Windows)
+# Ingresar ruta: /home/analyst/samples/suspicious.exe
+# Seleccionar herramientas: manalyze, peframe, floss
+# El reporte se genera automáticamente en Results/suspicious_report.txt
+```
+
+### Ejecutar el pipeline de seguridad localmente
+
+```bash
+# Linting Python
+flake8 src/
+
+# Análisis SAST
+bandit -r src/
+
+# Linting de scripts Bash
+shellcheck scripts/*.sh
+
+# Suite de pruebas
+pytest tests/ -v
+```
+
+### Sincronizar versión sanitizada a GitHub
+
+```bash
+# Desde el entorno GitLab — elimina payloads, tests y configs sensibles
+bash scripts/sync_to_github.sh
+```
+
 ---
 
-## 🔄 Integración DevSecOps
+## 📁 Project Structure
 
-### Flujo GitLab ➔ GitHub
+```
+Sandboxed/
+│
+├── src/                          # Lógica central de orquestación [solo GitLab]
+│   └── sandbox.py                # Punto de entrada — menú interactivo de análisis
+│
+├── scripts/                      # Automatización y utilidades [solo GitLab]
+│   ├── setup.sh                  # Instalación de herramientas de análisis (requiere root)
+│   ├── sync_to_github.sh         # Sincronización sanitizada hacia GitHub
+│   └── payloads/                 # Muestras de prueba controladas [gitignoreado]
+│
+├── configs/                      # Configuraciones por entorno
+│   ├── settings.example.yaml     # Plantilla pública de configuración (versionada)
+│   └── settings.yaml             # Configuración local con rutas reales [gitignoreado]
+│
+├── tests/                        # Suite de pruebas pytest [gitignoreado / solo GitLab]
+│   └── test_*.py                 # Pruebas unitarias y funcionales de los módulos
+│
+├── docs/                         # Documentación técnica
+│   └── ARCHITECTURE.md           # Manual de arquitectura del sistema
+│
+├── diagrams/                     # Representaciones visuales del sistema
+│   └── FLOW.md                   # Diagrama de flujo del pipeline de análisis
+│
+├── Results/                      # Salida de reportes de análisis [gitignoreado]
+│   └── *.txt / *.pdf             # Informes generados por cada sesión de análisis
+│
+├── .gitlab-ci.yml                # Pipeline CI/CD (linting + SAST + tests) [solo GitLab]
+├── .gitignore                    # Control estricto de artefactos y secretos
+├── LICENSE                       # GNU General Public License v3.0
+└── README.md                     # Documentación pública del portafolio
+```
 
-El proyecto implementa una estrategia de **Seguridad por Diseño** que separa el laboratorio funcional del portafolio arquitectónico:
-
-### GitLab (Laboratorio Público Completo)
-
-El repositorio de GitLab funciona como **laboratorio público** que contiene:
-- **Código Fuente Completo**: Toda la lógica funcional de análisis de malware
-- **Pipelines CI/CD**: Integración continua con linting (*flake8*, *shellcheck*), análisis SAST (*bandit*) y pruebas automatizadas (*pytest*)
-- **Suite de Pruebas Integral**: Tests unitarios, funcionales y de integración
-- **Herramientas Especializadas**: Configuraciones avanzadas y payloads de análisis
-- **Documentación Técnica**: Manuales de operación y arquitectura detallada
-
-### GitHub (Portafolio Arquitectónico)
-
-La versión pública en GitHub sirve como **portafolio profesional** que demuestra:
-- **Arquitectura del Sistema**: Estructura y diseño del entorno sandboxed
-- **Mejores Prácticas DevSecOps**: Estrategias de seguridad y automatización
-- **Documentación de Referencia**: Guías técnicas y flujos de trabajo
-- **Perfil Profesional**: Presentación limpia sin funcionalidades críticas
-
-### Script de Sincronización
-
-El script `scripts/sync_to_github.sh` gestiona la publicación sanitizada:
-1. **Validación Automática**: Ejecuta pipelines completos en GitLab
-2. **Sanitización Controlada**: Remueve código sensible y configuraciones internas
-3. **Sincronización Segura**: Publica solo arquitectura y documentación en GitHub
+> **Nota de seguridad sobre `.gitignore`:** El archivo excluye explícitamente `Results/`, `*.txt`, `*.pdf`, `*.bin`, `tests/`, `scripts/payloads/`, `.env` y `configs/*.yaml`. Esto garantiza que ningún reporte de análisis, muestra de malware, variable de entorno sensible ni resultado forense sea expuesto accidentalmente en el repositorio público.
 
 ---
 
-## 🛠️ Herramientas Integradas
+## 🔐 Security
 
-| Categoría | Herramientas |
-| :--- | :--- |
-| **Windows** | `manalyze`, `peframe`, `pestr`, `flarestrings`, `floss` |
-| **Linux** | `trid`, `exiftool`, `cutter` |
-| **Docs/PDF** | `pcodedmp`, `olevba`, `xlmdeobfuscator`, `pdfextract`, `pdfresurrect` |
+### Contexto de uso responsable
+
+**Sandboxed** implementa un enfoque de **análisis estático**, lo que significa que las muestras de malware nunca se ejecutan — solo se inspeccionan en reposo. Esto reduce significativamente el riesgo de infección accidental del entorno de análisis. Sin embargo, el manejo de muestras reales siempre requiere medidas adicionales de contención.
+
+### Implicaciones técnicas
+
+- **Análisis estático exclusivamente:** Las herramientas integradas (`peframe`, `manalyze`, `olevba`, etc.) operan sobre los binarios sin ejecutarlos, minimizando la superficie de exposición
+- **Aislamiento de resultados:** El directorio `Results/` está explícitamente excluido de Git mediante `.gitignore`, evitando la filtración de informes forenses que podrían contener IoCs (Indicadores de Compromiso) sensibles
+- **Payloads de prueba gitignoreados:** `scripts/payloads/` contiene muestras controladas para validar el pipeline, pero nunca se sincronizan al repositorio público
+- **Configuraciones sensibles protegidas:** Las configuraciones locales (`configs/*.yaml`) con rutas absolutas del sistema están excluidas; solo las plantillas de ejemplo (`.example.yaml`) son versionadas
+- **SAST en pipeline:** `bandit` analiza el código Python del orquestador en busca de llamadas peligrosas como `subprocess.shell=True`, `eval` o `exec` antes de cada merge en GitLab
+- **REMnux como entorno base:** Al estar diseñado para REMnux, el sistema asume un entorno ya hardeneado y específicamente configurado para análisis forense
+
+### Buenas prácticas de laboratorio
+
+- Ejecutar **exclusivamente en máquinas virtuales** sin interfaces de red activas hacia redes de producción (modo host-only o NAT aislado)
+- Utilizar **snapshots de VM** antes de iniciar cada sesión de análisis para restaurar el estado limpio
+- Nunca copiar muestras de malware a sistemas anfitriones (host) — mantenerlas confinadas en la VM
+- Destruir y regenerar el entorno de análisis periódicamente para evitar acumulación de residuos maliciosos
+- Verificar siempre el hash (SHA-256) de las muestras antes de analizarlas para garantizar la integridad de la cadena de custodia forense
+
+---
+
+## 🌐 Repository Architecture
+
+Este proyecto sigue una arquitectura distribuida de doble repositorio orientada a DevSecOps:
+
+- **GitHub** → Portafolio público: documentación arquitectónica (`docs/ARCHITECTURE.md`), diagramas de flujo (`diagrams/FLOW.md`), plantillas de configuración y presentación profesional
+- **GitLab** → Laboratorio educativo completo: código fuente operativo (`src/sandbox.py`), herramientas de instalación, payloads de prueba, suite `pytest` y pipeline CI/CD
+
+```
+GitLab (Laboratorio Completo)              GitHub (Portafolio Público)
+┌──────────────────────────────┐           ┌────────────────────────────┐
+│ src/sandbox.py  → Orquest.   │           │ docs/ARCHITECTURE.md       │
+│ scripts/setup.sh → Instalac. │──push──►  │ diagrams/FLOW.md           │
+│ scripts/payloads/→ Muestras  │ sanitiz.  │ configs/*.example.yaml     │
+│ tests/          → pytest     │           │ LICENSE / README.md        │
+│ .gitlab-ci.yml  → CI/CD      │           └────────────────────────────┘
+│ configs/*.yaml  → Config.    │
+└──────────────────────────────┘
+          ▲
+    sync_to_github.sh
+  (sanitización + push forzado)
+```
+
+### 🔗 Full Source Code
+
+👉 Código operativo completo disponible en GitLab: [https://gitlab.com/group-cybersecurity-lab/Sandboxed](https://gitlab.com/group-cybersecurity-lab/Sandboxed)
+
+---
+
+## 🚀 Roadmap
+
+- [ ] **Análisis dinámico ligero** — Integración con entornos de ejecución controlada (cuckoo sandbox local) como capa opcional sobre el análisis estático actual
+- [ ] **Generación de reportes PDF automáticos** — Templates estructurados con metadatos del artefacto, hashes, IoCs detectados y resumen ejecutivo
+- [ ] **Soporte para archivos comprimidos y empaquetados** — Descompresión y análisis automático de `.zip`, `.7z` y archivos UPX-packed
+- [ ] **Base de datos de resultados** — Almacenamiento estructurado (SQLite) de análisis previos para correlación y comparación entre muestras
+- [ ] **Integración con VirusTotal API** — Consulta automática de hash SHA-256 contra la base de datos de VirusTotal para enriquecer el reporte
+- [ ] **Perfil de configuración múltiple** — Soporte para perfiles YAML diferenciados por tipo de laboratorio (básico, intermedio, avanzado)
+- [ ] **Interfaz web liviana** — Panel Flask/FastAPI opcional para gestión de análisis y visualización de reportes desde el navegador
+- [ ] **Cobertura pytest ≥ 85%** — Expansión de la suite de pruebas con mocks de herramientas externas y pruebas de integración completas
+- [ ] **Soporte para macOS (Apple Silicon)** — Compatibilidad con herramientas disponibles en Homebrew para análisis en entornos macOS ARM
+
+---
+
+## 📄 License
+
+**GNU General Public License v3.0** — Ver [`LICENSE`](./LICENSE)
+
+El código puede ser usado, modificado y distribuido bajo los términos de la GPL-3.0, con la obligación de mantener el código fuente disponible en distribuciones derivadas. Queda explícitamente prohibido el uso de este software fuera de entornos de investigación autorizados o con fines maliciosos.
+
+---
+
+## 👨‍💻 Author
+
+**Sebastian** — [`@devsebastian44`](https://github.com/devsebastian44)
+
+Investigador en ciberseguridad con especialización en análisis de malware, forense digital y automatización de pipelines DevSecOps. Este proyecto forma parte de un laboratorio educativo de ciberseguridad orientado a la investigación defensiva.
+
+| Plataforma | Enlace |
+|---|---|
+| GitHub | [github.com/devsebastian44](https://github.com/devsebastian44) |
+| GitLab | [gitlab.com/group-cybersecurity-lab](https://gitlab.com/group-cybersecurity-lab) |
+
+---
+
+> *Este repositorio es un portafolio educativo de análisis de malware. Todo el contenido ha sido diseñado para su uso en entornos de laboratorio aislados, con fines exclusivamente defensivos y de investigación en ciberseguridad.*
