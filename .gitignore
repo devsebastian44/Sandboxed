@@ -2,6 +2,7 @@
 Results/
 results/
 *.txt
+!requirements.txt
 *.pdf
 *.bin
 

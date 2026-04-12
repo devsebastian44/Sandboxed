@@ -1,0 +1,13 @@
+# Linter & Formatting
+flake8>=6.1.0
+
+# Security (SAST & Vulnerability Scanning)
+bandit>=1.7.5
+pip-audit>=2.6.1
+
+# Testing
+pytest>=7.4.0
+
+# Optional DevOps utilities
+pre-commit>=3.4.0
+shellcheck-py>=0.9.0
