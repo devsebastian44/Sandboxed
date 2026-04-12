@@ -221,6 +221,9 @@ Sandboxed/
 │   └── *.txt / *.pdf             # Informes generados por cada sesión de análisis
 │
 ├── .gitlab-ci.yml                # Pipeline CI/CD (linting + SAST + tests) [solo GitLab]
+├── .pre-commit-config.yaml       # Configuración de hooks pre-commit (Linting / SAST local)
+├── Makefile                      # Automatización DevSecOps (make install, test, lint)
+├── requirements.txt              # Gestión centralizada de dependencias en Python
 ├── .gitignore                    # Control estricto de artefactos y secretos
 ├── LICENSE                       # GNU General Public License v3.0
 └── README.md                     # Documentación pública del portafolio
