@@ -2,8 +2,8 @@
 
 ![Python](https://img.shields.io/badge/Python-3.8+-3776AB?style=flat&logo=python&logoColor=white)
 ![REMnux](https://img.shields.io/badge/REMnux-Compatible-4EAA25?style=flat&logo=linux&logoColor=white)
-![GitLab CI](https://img.shields.io/badge/GitLab_CI-DevSecOps-FC6D26?style=flat&logo=gitlab&logoColor=white)
 ![Bandit](https://img.shields.io/badge/SAST-Bandit-critical?style=flat&logo=python&logoColor=white)
+![GitHub Actions](https://img.shields.io/badge/GitHub_Actions-CI%2FCD-2088FF?style=flat&logo=github-actions&logoColor=white)
 ![License](https://img.shields.io/badge/License-GPL--3.0-red?style=flat&logo=gnu&logoColor=white)
 ![Type](https://img.shields.io/badge/Type-Malware%20Analysis-darkred?style=flat&logo=virustotal&logoColor=white)
 
@@ -11,11 +11,14 @@
 
 ## 🧠 Overview
 
-**Sandboxed** es un orquestador de análisis estático de malware en Python, diseñado para ejecutarse sobre entornos Linux especializados como **REMnux**. A través de un menú interactivo centralizado (`sandbox.py`), la herramienta encadena y ejecuta un conjunto de utilidades de análisis forense clasificadas por tipo de artefacto: ejecutables Windows (PE), binarios Linux y documentos ofimáticos/PDF.
+> [!IMPORTANT]
+> **Ethical Disclosure:** This project is for educational and ethical cybersecurity purposes only. The tools and techniques described should only be used in isolated laboratory environments and with explicit authorization.
 
-El sistema genera informes de análisis en múltiples formatos (`.txt`, `.pdf`) y los almacena en un directorio de resultados aislado (`Results/`), garantizando que ningún artefacto de análisis sea rastreado por Git. La arquitectura separa la lógica central de orquestación (`src/`), los scripts de instalación y payloads de prueba (`scripts/`), y las configuraciones personalizables por entorno (`configs/*.yaml`).
+**Sandboxed** es un orquestador de análisis estático de malware en Python de grado profesional, diseñado para ejecutarse sobre entornos Linux especializados como **REMnux**. A través de un menú interactivo centralizado (`sandbox.py`), la herramienta encadena y ejecuta un conjunto de utilidades de análisis forense clasificadas por tipo de artefacto: ejecutables Windows (PE), binarios Linux y documentos ofimáticos/PDF.
 
-El proyecto sigue la misma estrategia **DevSecOps de doble repositorio** que el resto del laboratorio: el código operativo completo reside en GitLab, mientras que GitHub expone únicamente la arquitectura y documentación sanitizada.
+El sistema genera informes de análisis en múltiples formatos (`.txt`, `.pdf`) y los almacena en un directorio de resultados aislado (`results/`), garantizando que ningún artefacto de análisis sea rastreado por Git. La arquitectura separa la lógica central de orquestación (`src/`), los scripts de instalación y payloads de prueba (`scripts/`), y las configuraciones personalizables por entorno (`configs/*.yaml`).
+
+El proyecto sigue una estrategia **DevSecOps integral**: el repositorio contiene el código operativo completo, la documentación técnica y los diagramas de arquitectura, optimizado para la colaboración en entornos de investigación de ciberseguridad.
 
 > ⚠️ **Uso Responsable:** Esta herramienta está diseñada exclusivamente para análisis forense en entornos aislados y controlados. El análisis de muestras reales de malware debe realizarse estrictamente en máquinas virtuales sin acceso a redes de producción.
 
@@ -31,8 +34,8 @@ El proyecto sigue la misma estrategia **DevSecOps de doble repositorio** que el 
 - **Sistema de configuración YAML por entorno**: `configs/*.yaml` con plantillas de ejemplo versionadas (`*.example.yaml`) y configuraciones locales gitignoreadas
 - **Script de instalación de dependencias** (`scripts/setup.sh`) que configura el entorno de herramientas con privilegios de root
 - **Subdirectorio de payloads de prueba** (`scripts/payloads/`) con muestras controladas para validación del pipeline de análisis (excluido de Git)
-- **Pipeline CI/CD GitLab** con linting (`flake8`, `shellcheck`), análisis SAST (`bandit`) y suite de pruebas (`pytest`)
-- **Script de sincronización sanitizada** (`scripts/sync_to_github.sh`) para publicación controlada hacia el repositorio público
+- **Suite de pruebas y calidad**: Integración con `flake8`, `shellcheck`, `bandit` y `pytest` para asegurar la calidad y seguridad del código
+- **Hooks de pre-commit**: Automatización de linting y SAST local antes de cada commit
 
 ---
 
@@ -86,10 +89,10 @@ El proyecto sigue la misma estrategia **DevSecOps de doble repositorio** que el 
 
 > 💡 Se recomienda ejecutar sobre una distribución **REMnux** donde la mayoría de herramientas de análisis ya están preinstaladas.
 
-### Clonar el repositorio completo (desde GitLab)
+### Clonar el repositorio
 
 ```bash
-git clone https://gitlab.com/group-cybersecurity-lab/Sandboxed.git
+git clone https://github.com/bl4ck44/Sandboxed.git
 cd Sandboxed
 ```
 
@@ -182,12 +185,6 @@ shellcheck scripts/*.sh
 pytest tests/ -v
 ```
 
-### Sincronizar versión sanitizada a GitHub
-
-```bash
-# Desde el entorno GitLab — elimina payloads, tests y configs sensibles
-bash scripts/sync_to_github.sh
-```
 
 ---
 
@@ -196,19 +193,18 @@ bash scripts/sync_to_github.sh
 ```
 Sandboxed/
 │
-├── src/                          # Lógica central de orquestación [solo GitLab]
+├── src/                          # Lógica central de orquestación
 │   └── sandbox.py                # Punto de entrada — menú interactivo de análisis
 │
-├── scripts/                      # Automatización y utilidades [solo GitLab]
+├── scripts/                      # Automatización y utilidades
 │   ├── setup.sh                  # Instalación de herramientas de análisis (requiere root)
-│   ├── sync_to_github.sh         # Sincronización sanitizada hacia GitHub
 │   └── payloads/                 # Muestras de prueba controladas [gitignoreado]
 │
 ├── configs/                      # Configuraciones por entorno
 │   ├── settings.example.yaml     # Plantilla pública de configuración (versionada)
 │   └── settings.yaml             # Configuración local con rutas reales [gitignoreado]
 │
-├── tests/                        # Suite de pruebas pytest [gitignoreado / solo GitLab]
+├── tests/                        # Suite de pruebas pytest [gitignoreado]
 │   └── test_*.py                 # Pruebas unitarias y funcionales de los módulos
 │
 ├── docs/                         # Documentación técnica
@@ -220,7 +216,6 @@ Sandboxed/
 ├── Results/                      # Salida de reportes de análisis [gitignoreado]
 │   └── *.txt / *.pdf             # Informes generados por cada sesión de análisis
 │
-├── .gitlab-ci.yml                # Pipeline CI/CD (linting + SAST + tests) [solo GitLab]
 ├── .pre-commit-config.yaml       # Configuración de hooks pre-commit (Linting / SAST local)
 ├── Makefile                      # Automatización DevSecOps (make install, test, lint)
 ├── requirements.txt              # Gestión centralizada de dependencias en Python
@@ -245,7 +240,7 @@ Sandboxed/
 - **Aislamiento de resultados:** El directorio `Results/` está explícitamente excluido de Git mediante `.gitignore`, evitando la filtración de informes forenses que podrían contener IoCs (Indicadores de Compromiso) sensibles
 - **Payloads de prueba gitignoreados:** `scripts/payloads/` contiene muestras controladas para validar el pipeline, pero nunca se sincronizan al repositorio público
 - **Configuraciones sensibles protegidas:** Las configuraciones locales (`configs/*.yaml`) con rutas absolutas del sistema están excluidas; solo las plantillas de ejemplo (`.example.yaml`) son versionadas
-- **SAST en pipeline:** `bandit` analiza el código Python del orquestador en busca de llamadas peligrosas como `subprocess.shell=True`, `eval` o `exec` antes de cada merge en GitLab
+- **SAST en el flujo de trabajo:** `bandit` analiza el código Python del orquestador en busca de llamadas peligrosas como `subprocess.shell=True`, `eval` o `exec` para prevenir vulnerabilidades de inyección
 - **REMnux como entorno base:** Al estar diseñado para REMnux, el sistema asume un entorno ya hardeneado y específicamente configurado para análisis forense
 
 ### Buenas prácticas de laboratorio
@@ -258,31 +253,6 @@ Sandboxed/
 
 ---
 
-## 🌐 Repository Architecture
-
-Este proyecto sigue una arquitectura distribuida de doble repositorio orientada a DevSecOps:
-
-- **GitHub** → Portafolio público: documentación arquitectónica (`docs/ARCHITECTURE.md`), diagramas de flujo (`diagrams/FLOW.md`), plantillas de configuración y presentación profesional
-- **GitLab** → Laboratorio educativo completo: código fuente operativo (`src/sandbox.py`), herramientas de instalación, payloads de prueba, suite `pytest` y pipeline CI/CD
-
-```
-GitLab (Laboratorio Completo)              GitHub (Portafolio Público)
-┌──────────────────────────────┐           ┌────────────────────────────┐
-│ src/sandbox.py  → Orquest.   │           │ docs/ARCHITECTURE.md       │
-│ scripts/setup.sh → Instalac. │──push──►  │ diagrams/FLOW.md           │
-│ scripts/payloads/→ Muestras  │ sanitiz.  │ configs/*.example.yaml     │
-│ tests/          → pytest     │           │ LICENSE / README.md        │
-│ .gitlab-ci.yml  → CI/CD      │           └────────────────────────────┘
-│ configs/*.yaml  → Config.    │
-└──────────────────────────────┘
-          ▲
-    sync_to_github.sh
-  (sanitización + push forzado)
-```
-
-### 🔗 Full Source Code
-
-👉 Código operativo completo disponible en GitLab: [https://gitlab.com/group-cybersecurity-lab/Sandboxed](https://gitlab.com/group-cybersecurity-lab/Sandboxed)
 
 ---
 
@@ -317,7 +287,7 @@ Investigador en ciberseguridad con especialización en análisis de malware, for
 | Plataforma | Enlace |
 |---|---|
 | GitHub | [github.com/devsebastian44](https://github.com/devsebastian44) |
-| GitLab | [gitlab.com/group-cybersecurity-lab](https://gitlab.com/group-cybersecurity-lab) |
+
 
 ---
 
