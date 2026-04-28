@@ -121,6 +121,17 @@ cp configs/settings.example.yaml configs/settings.yaml
 nano configs/settings.yaml   # Editar rutas de herramientas si es necesario
 ```
 
+### Ejecutar Pruebas Locales
+
+```bash
+# Ejecutar suite de pruebas con pytest
+pytest tests/ -v
+
+# Ejecutar linting y análisis de seguridad
+flake8 src/
+bandit -r src/
+```
+
 ### Instalar herramientas de análisis estático (CI local)
 
 ```bash
@@ -277,6 +288,19 @@ Sandboxed/
 El código puede ser usado, modificado y distribuido bajo los términos de la GPL-3.0, con la obligación de mantener el código fuente disponible en distribuciones derivadas. Queda explícitamente prohibido el uso de este software fuera de entornos de investigación autorizados o con fines maliciosos.
 
 ---
+
+---
+
+## 🤝 Contributing
+
+¡Las contribuciones son bienvenidas! Para mantener la calidad del proyecto, sigue estos pasos:
+
+1. **Fork** el repositorio.
+2. Crea una nueva rama para tu funcionalidad (`git checkout -b feature/amazing-feature`).
+3. Realiza tus cambios y asegúrate de que pasen los tests (`pytest tests/`).
+4. Haz commit de tus cambios siguiendo [Conventional Commits](https://www.conventionalcommits.org/).
+5. Realiza un **Push** a la rama (`git push origin feature/amazing-feature`).
+6. Abre un **Pull Request**.
 
 ## 👨‍💻 Author
 
