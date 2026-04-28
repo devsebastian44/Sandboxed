@@ -7,6 +7,10 @@ pip-audit>=2.6.1
 
 # Testing
 pytest>=7.4.0
+pytest-mock>=3.11.1
+
+# Configuration
+PyYAML>=6.0.1
 
 # Optional DevOps utilities
 pre-commit>=3.4.0

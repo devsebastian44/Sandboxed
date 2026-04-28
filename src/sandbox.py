@@ -2,6 +2,36 @@ import os
 import subprocess  # nosec B404
 import sys
 import shlex
+import yaml
+
+
+def cargar_configuracion(ruta_config="configs/settings.yaml"):
+    """Carga la configuración desde un archivo YAML"""
+    config_default = {
+        "general": {"results_dir": "results", "timeout_seconds": 300},
+        "tools": {
+            "manalyze": "manalyze", "peframe": "peframe", "pestr": "pestr",
+            "flarestrings": "flarestrings", "floss": "floss", "trid": "trid",
+            "exiftool": "exiftool", "cutter": "cutter", "pcodedmp": "pcodedmp",
+            "olevba": "olevba", "xlmdeobfuscator": "xlmdeobfuscator",
+            "pdfextract": "pdfextract", "pdfresurrect": "pdfresurrect"
+        }
+    }
+    if os.path.exists(ruta_config):
+        try:
+            with open(ruta_config, "r", encoding="utf-8") as f:
+                config_usuario = yaml.safe_load(f)
+                if config_usuario:
+                    # Mezclar con valores por defecto
+                    for key in config_default:
+                        if key in config_usuario:
+                            config_default[key].update(config_usuario[key])
+        except Exception as e:
+            print(f"[!] Error al cargar configuración: {e}. Usando valores por defecto.")
+    return config_default
+
+
+CONFIG = cargar_configuracion()
 
 
 def limpiar_pantalla():
@@ -60,8 +90,9 @@ def ejecutar_comando(comando, nombre_archivo, directorio="results"):
         # shell=False (default) prevents shell injection
         # args are properly parsed by shlex to prevent injection
         args = shlex.split(comando)
+        timeout = CONFIG["general"].get("timeout_seconds", 300)
         resultado = subprocess.run(
-            args, capture_output=True, text=True, timeout=300, check=False
+            args, capture_output=True, text=True, timeout=timeout, check=False
         )  # nosec B603
 
         salida = resultado.stdout + resultado.stderr
@@ -136,10 +167,10 @@ def menu_analisis_windows(archivo):
             sub_opcion = input(msg).strip()
 
             if sub_opcion == "1":
-                ejecutar_comando(f"manalyze {archivo}", "manalyze.txt")
+                ejecutar_comando(f"{CONFIG['tools']['manalyze']} {archivo}", "manalyze.txt")
                 pausar()
             elif sub_opcion == "2":
-                ejecutar_comando(f"peframe {archivo}", "peframe.txt")
+                ejecutar_comando(f"{CONFIG['tools']['peframe']} {archivo}", "peframe.txt")
                 pausar()
             elif sub_opcion == "99":
                 continue
@@ -155,13 +186,13 @@ def menu_analisis_windows(archivo):
             sub_opcion = input(msg).strip()
 
             if sub_opcion == "1":
-                ejecutar_comando(f"pestr {archivo}", "pestr.txt")
+                ejecutar_comando(f"{CONFIG['tools']['pestr']} {archivo}", "pestr.txt")
                 pausar()
             elif sub_opcion == "2":
-                ejecutar_comando(f"flarestrings {archivo}", "flarestrings.txt")
+                ejecutar_comando(f"{CONFIG['tools']['flarestrings']} {archivo}", "flarestrings.txt")
                 pausar()
             elif sub_opcion == "3":
-                ejecutar_comando(f"floss {archivo}", "floss.txt")
+                ejecutar_comando(f"{CONFIG['tools']['floss']} {archivo}", "floss.txt")
                 pausar()
             elif sub_opcion == "99":
                 continue
@@ -198,10 +229,10 @@ def menu_analisis_linux(archivo):
             sub_opcion = input(msg).strip()
 
             if sub_opcion == "1":
-                ejecutar_comando(f"trid {archivo}", "trid.txt")
+                ejecutar_comando(f"{CONFIG['tools']['trid']} {archivo}", "trid.txt")
                 pausar()
             elif sub_opcion == "2":
-                ejecutar_comando(f"exiftool {archivo}", "exiftool.txt")
+                ejecutar_comando(f"{CONFIG['tools']['exiftool']} {archivo}", "exiftool.txt")
                 pausar()
             elif sub_opcion == "99":
                 continue
@@ -219,7 +250,7 @@ def menu_analisis_linux(archivo):
                 try:
                     # Application specific orchestration
                     subprocess.run(
-                        ["cutter", archivo], check=False
+                        [CONFIG['tools']['cutter'], archivo], check=False
                     )  # nosec B603, B607
                 except FileNotFoundError:
                     print("[!] Error: Cutter no está instalado.")
@@ -261,14 +292,14 @@ def menu_documentos(archivo):
             sub_opcion = input(msg).strip()
 
             if sub_opcion == "1":
-                ejecutar_comando(f"pcodedmp {archivo}", "pcodedmp.txt")
+                ejecutar_comando(f"{CONFIG['tools']['pcodedmp']} {archivo}", "pcodedmp.txt")
                 pausar()
             elif sub_opcion == "2":
-                ejecutar_comando(f"olevba {archivo}", "olevba.txt")
+                ejecutar_comando(f"{CONFIG['tools']['olevba']} {archivo}", "olevba.txt")
                 pausar()
             elif sub_opcion == "3":
                 ejecutar_comando(
-                    f"xlmdeobfuscator --file {archivo}",
+                    f"{CONFIG['tools']['xlmdeobfuscator']} --file {archivo}",
                     "XLMMacroDeobfuscator.txt"
                 )
                 pausar()
@@ -291,11 +322,11 @@ def menu_documentos(archivo):
             sub_opcion = input(msg).strip()
 
             if sub_opcion == "1":
-                cmd = f"pdfextract -afjms {archivo} -d {destino}"
+                cmd = f"{CONFIG['tools']['pdfextract']} -afjms {archivo} -d {destino}"
                 ejecutar_comando(cmd, "pdfextract.txt", "results/PDF")
                 pausar()
             elif sub_opcion == "2":
-                ejecutar_comando(f"pdfresurrect {archivo}", "pdfresurrect.txt")
+                ejecutar_comando(f"{CONFIG['tools']['pdfresurrect']} {archivo}", "pdfresurrect.txt")
                 pausar()
             elif sub_opcion == "99":
                 continue

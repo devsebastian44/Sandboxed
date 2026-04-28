@@ -1,0 +1,24 @@
+# configs/settings.example.yaml
+# Copy this file to configs/settings.yaml and adjust paths if necessary
+
+# General Settings
+general:
+  results_dir: "results"
+  timeout_seconds: 300
+  language: "es"
+
+# External Tool Paths (Override if tools are not in PATH)
+tools:
+  manalyze: "manalyze"
+  peframe: "peframe"
+  pestr: "pestr"
+  flarestrings: "flarestrings"
+  floss: "floss"
+  trid: "trid"
+  exiftool: "exiftool"
+  cutter: "cutter"
+  pcodedmp: "pcodedmp"
+  olevba: "olevba"
+  xlmdeobfuscator: "xlmdeobfuscator"
+  pdfextract: "pdfextract"
+  pdfresurrect: "pdfresurrect"
