@@ -11,7 +11,7 @@
 
 ## 🧠 Overview
 
-> [!IMPORTANTE]
+> [!IMPORTANT]  
 > **Aviso ético:** Este proyecto tiene fines exclusivamente educativos y éticos en materia de ciberseguridad. Las herramientas y técnicas descritas solo deben utilizarse en entornos de laboratorio aislados y con autorización expresa.
 
 **Sandboxed** es un orquestador de análisis estático de malware en Python de grado profesional, diseñado para ejecutarse sobre entornos Linux especializados como **REMnux**. A través de un menú interactivo centralizado (`sandbox.py`), la herramienta encadena y ejecuta un conjunto de utilidades de análisis forense clasificadas por tipo de artefacto: ejecutables Windows (PE), binarios Linux y documentos ofimáticos/PDF.
