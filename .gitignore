@@ -16,7 +16,6 @@ venv/
 ENV/
 
 # Sensitive or Lab-only files
-tests/
 scripts/payloads/
 .env
 configs/*.yaml
